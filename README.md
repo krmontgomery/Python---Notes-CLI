@@ -8,6 +8,8 @@ ___
 
 So far the only package that this application utilizes that will need to be installed is *colorama*. This allowed me to give some character to the application and make is a better experience for use.
 
+<img src='carbon.png'>
+
 >The command I used to install this will was:
 
 ```

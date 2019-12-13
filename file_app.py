@@ -1,4 +1,4 @@
-import glob, os
+import os
 import datetime
 from colorama import Fore, Back, Style, init
 
