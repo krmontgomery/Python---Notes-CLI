@@ -1,6 +1,6 @@
 # Python CRUD (text file) CLI #
 ___
-This CLI program is a CRUD based application. You can create new, read from, write to and delete those .txt files. 
+This CLI program is a CRUD based application. You can create new, read from, write to and delete .txt files. 
 
 ## Getting Started ##
 ___
