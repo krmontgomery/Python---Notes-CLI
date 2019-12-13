@@ -6,7 +6,7 @@ This CLI program is a CRUD based application. You can create new, read from, wri
 ___
 **Packages**
 
-So far the only package that this application utilizes that will need to be installed is *colorama*. This allowed me to give some character to the application and make is a better experience for use.
+So far the only package that this application utilizes that will need to be installed is *colorama*. This allowed me to give some character to the application and make it a better experience for use.
 
 <img src='carbon.png'>
 
