@@ -1,0 +1,9 @@
+
+2019-12-12 12:42:12.716758: 
+I need to figure out how to make this program give me options on files. So I don't have to write them in. This will make life easier.
+2019-12-12 14:28:34.999742: 
+Need to setup Ruan on GoAnywhere.
+2019-12-12 15:32:32.498535: 
+Figure out what all tasks I have left to do.
+2019-12-12 15:41:16.356052: 
+testing
