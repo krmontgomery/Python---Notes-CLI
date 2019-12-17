@@ -17,6 +17,7 @@ selenium = "*"
 csv = "*"
 unicodecsv = "*"
 inquirer = "*"
+fileinput = "*"
 
 [requires]
 python_version = "3.8"
