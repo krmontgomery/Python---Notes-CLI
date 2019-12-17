@@ -19,6 +19,7 @@ def assignAction(action):
         print(Fore.YELLOW)
         fileNam = str(input('Give a filename: ')).lower().strip()
         text = str(input(Fore.YELLOW + 'What is your message: '))
+        text = 'Entry: ' + text
         writeToFile(fileNam, text)
     elif action == actionsArray[2]: # If reading a file
         chckDirectory()
@@ -40,7 +41,7 @@ def assignAction(action):
         print(Fore.LIGHTBLUE_EX + '\nYou are exiting the program.')
         print(exit())
     else:
-        print('\nCommand does not exist.') # Command not found
+        print(Fore.LIGHTMAGENTA_EX+'\nCommand does not exist.') # Command not found
         mainFunction()
 
 
@@ -64,7 +65,18 @@ def createFile(fileName):
 def readFile(fileName):
     print(Style.RESET_ALL)
     rf = open(f'./notes_folder/{fileName}.txt', 'r')
-    print(Fore.GREEN + f'{rf.read()}')
+    eachLineOut = rf.readlines()
+    for line in eachLineOut[:]:
+        if line.startswith("Entry: "):
+            print(Fore.GREEN)
+            line = f'{line}'
+            print(line)
+        else:
+            print(Fore.WHITE)
+            line = f'{line}'
+            print(line)
+    # print(eachLineOut)
+    # print(Fore.GREEN + f'{rf.readlines()}')
     print(Style.RESET_ALL)
     rf.close()
     mainFunction()
@@ -82,12 +94,10 @@ def updateFileEntry(file):
         newlist = []
         counter += 1
         newlist.append(i)
-        newvar = f'{i} To update this entry type in => lines[{str(counter)}]'
-        if today in newvar:
-            print('')
-        else:
-            print(f'{newvar}')
-    inputstr = str(input('Which item to update? ')).lower().strip()
+        newvar = f'\n{Fore.CYAN}{i} {Fore.WHITE}To update this entry type in => lines[{str(counter)}]'
+        print(f'{newvar}')
+    print(Fore.YELLOW)
+    inputstr = str(input('\nWhich item to update? ')).lower().strip()
     whatToSay = str(input('Update with? ')).lower().strip()
     rf = open(f'./notes_folder/{file}.txt', 'r')
     lines = rf.readlines()
@@ -99,6 +109,11 @@ def updateFileEntry(file):
     lines = [line.rstrip('\n') for line in lines]
     lines = [line + '\n' for line in lines]
     wf.writelines(lines)
+    wf.close()
+    print(Fore.CYAN)
+    print(f'\nYou updated entry to: {whatToSay}')
+    mainFunction()
+
     # print(lines)
 
 def writeToFile(file, text):
@@ -161,6 +176,7 @@ def mainFunction():
     print(Style.RESET_ALL)
     print(Fore.YELLOW + 'What would you like to do?')
     print(Fore.YELLOW + 'Example Commands: (create/write/read/update/delete/exit)')
+    print(Fore.WHITE)
     action = str(input('Input your action: ')).lower().strip()
     # decide what file we're going to do what with
     assignAction(action)  
