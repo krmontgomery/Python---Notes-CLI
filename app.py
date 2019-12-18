@@ -5,7 +5,7 @@ import fileinput
 
 
 init(autoreset=False)
-actionsArray = ['create','write', 'read', 'update', 'delete', 'exit']
+actionsArray = ['/crtfile','/writeto', '/rdfrom', '/updtentry', '/dltfile','/commands', '/exit']
 fileList = os.listdir('C:/Users/User/Desktop/Notes_App/notes_folder')[:]
 
 # ----------------- Assigning Function based on user input -----------------
@@ -18,43 +18,66 @@ def assignAction(action):
         chckDirectory()
         print(Fore.YELLOW)
         fileNam = str(input('Give a filename: ')).lower().strip()
-        text = str(input(Fore.YELLOW + 'What is your message: '))
+        fileMatchList(fileNam)
+        print(Fore.YELLOW)
+        text = str(input('What is your message: '))
         text = 'Entry: ' + text
+        if fileNam.endswith('.txt'):
+            fileNam = fileNam[:-4]
         writeToFile(fileNam, text)
     elif action == actionsArray[2]: # If reading a file
         chckDirectory()
         print(Fore.YELLOW)
         fileNam = str(input('Give a filename: ')).lower().strip()
+        fileMatchList(fileNam)
         print(Style.RESET_ALL)
         readFile(fileNam)
     elif action == actionsArray[3]:
         chckDirectory()
         print(Fore.YELLOW)
         fileNam = str(input('Give a filename: ')).lower().strip()
+        fileMatchList(fileNam)
         updateFileEntry(fileNam)
     elif action == actionsArray[4]: # If deleting a file
         chckDirectory()
         print(Fore.YELLOW)
         fileNam = str(input('Give a filename: ')).lower().strip()
+        fileMatchList(fileNam)
         deleteFile(fileNam)
-    elif action == actionsArray[5]: # If exiting the program
+    elif action == actionsArray[5]:
+        print(Fore.YELLOW)
+        print('Commands Available: ')
+        for cmd in actionsArray[:]:
+            print(Fore.CYAN)
+            print(cmd)
+        mainFunction()
+    elif action == actionsArray[6]: # If exiting the program
         print(Fore.LIGHTBLUE_EX + '\nYou are exiting the program.')
         print(exit())
     else:
         print(Fore.LIGHTMAGENTA_EX+'\nCommand does not exist.') # Command not found
         mainFunction()
 
-
 # ----------------- List out existing files ------------------
 def chckDirectory(): # Checking directory for text files
     print(Style.RESET_ALL)
     print(Fore.YELLOW + '\nChoose from files:')
-    for file in os.listdir("C:/Users/User/Desktop/Notes_App/notes_folder"):
+    for file in os.listdir("C:/Users/User/Desktop/Notes_App/notes_folder/"):
         if file.endswith('.txt'):
             print(Fore.WHITE + f'{file}')
     print('\n')
-        
 
+def fileMatchList(zfile):
+    if zfile != zfile.endswith('.txt'):
+        zfile = zfile + '.txt'
+    print(Fore.WHITE+zfile)
+    if zfile not in fileList:
+        print(Fore.RED+'File was not found.')
+        mainFunction()
+    else:
+        print(Fore.GREEN+'File was correctly selected.')
+
+        
 # ----------------- (App Actions) Functions -----------------
 def createFile(fileName):
     print(Style.RESET_ALL)
@@ -75,8 +98,6 @@ def readFile(fileName):
             print(Fore.WHITE)
             line = f'{line}'
             print(line)
-    # print(eachLineOut)
-    # print(Fore.GREEN + f'{rf.readlines()}')
     print(Style.RESET_ALL)
     rf.close()
     mainFunction()
@@ -88,7 +109,6 @@ def updateFileEntry(file):
     rf = open(f'./notes_folder/{file}.txt', 'r')
     listItems = rf.readlines()#store in variable
     rf.close()
-    today = datetime.today().strftime('%Y-%m-%d')#check for timestamp
     counter = -1
     for i in listItems:
         newlist = []
@@ -114,7 +134,6 @@ def updateFileEntry(file):
     print(f'\nYou updated entry to: {whatToSay}')
     mainFunction()
 
-    # print(lines)
 
 def writeToFile(file, text):
     rf = open(f'./notes_folder/{file}.txt', 'r')
@@ -169,13 +188,12 @@ def deleteFile(file):
             elif confirm == 'no':
                 mainFunction()        
 
-
 # ----------------- give action to assign function -----------------
 # Decide What you would like to do
 def mainFunction():
     print(Style.RESET_ALL)
     print(Fore.YELLOW + 'What would you like to do?')
-    print(Fore.YELLOW + 'Example Commands: (create/write/read/update/delete/exit)')
+    print(Fore.YELLOW + 'Example Commands: /crtfile /writeto /commands /exit')
     print(Fore.WHITE)
     action = str(input('Input your action: ')).lower().strip()
     # decide what file we're going to do what with
