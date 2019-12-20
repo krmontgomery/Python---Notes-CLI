@@ -23,6 +23,7 @@ pip install colorama
 
 - os
 - datetime
+- fileinput
 
 ---
 ## Built With ##
