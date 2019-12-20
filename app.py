@@ -285,7 +285,7 @@ def deleteFolder(dirName):
 def mainFunction():
     print(Style.RESET_ALL)
     print(Fore.YELLOW + 'What would you like to do?')
-    print(Fore.YELLOW + 'Example Commands: /crtfile /writeto /commands /exit')
+    print(Fore.YELLOW + 'Example Commands: /createfile /writeto /commands /exit')
     action = str(input('Input your action: ')).lower().strip()
     # decide what file we're going to do what with
     assignAction(action)  
