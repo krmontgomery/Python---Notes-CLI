@@ -1,6 +1,6 @@
 # Python CRUD (text file) CLI #
 ___
-This CLI program is a CRUD based application. You can create new, read from, write to and delete .txt files. 
+This CLI program is a CRUD based application. Not only can you create new, read from, write to and delete .txt files. But inside the parent directory, you can create folders, delete folders, read the contents from inside those folders. Also, the file (CRUD) functions take in a folder parameter which allows you do anything to any file inside any folder. 
 
 ## Getting Started ##
 ___
@@ -23,11 +23,12 @@ pip install colorama
 
 - os
 - datetime
+- fileinput
 
 ---
 ## Built With ##
 ---
-#### Python ####
+- Python 
 
 ### Authors ###
 ---

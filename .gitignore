@@ -1,3 +1,8 @@
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+
+# Various file types that should be ignored for this project
 *.txt
 .vscode/
 *.json
