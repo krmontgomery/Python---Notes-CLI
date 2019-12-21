@@ -2,45 +2,51 @@ import os
 from datetime import datetime
 from colorama import Fore, Back, Style, init
 import fileinput
-
+from actions_dictionary import actionsDictionary
 
 init(autoreset=False)
-actionsArray = ['/createfile','/writeto', '/readfrom', '/update', '/deletefile', '/createdir', '/deletedir','/commands', '/exit']
 fileList = os.listdir('C:/Users/User/Desktop/Notes_App/notes_folder')[:]
 
 # ----------------- Assigning Function based on user input -----------------
 def assignAction(action):
-    if action == actionsArray[0]: # If Create a File
+    if action == actionsDictionary['actions'][0]['action']: # If Create a File
         print(Fore.YELLOW)
         showFolders()
         print(Fore.YELLOW+'\n')
         folderNam = str(input('Pick a folder: ')).lower().strip()
-        folderExists = checkIfFolderExists(folderNam)
+        folderExists = indicateIfFolderExists(folderNam)
         if folderExists == True:
+            print(f'\n{Fore.GREEN}Folder ( {Fore.WHITE}{folderNam}{Fore.GREEN} ) does exist.')
             print(Fore.YELLOW)
-            fileNam = str(input('New File Name: ')).lower().strip()
+            fileNam = str(input('Input new filename: '))
+            if fileNam.endswith('.txt') == True:
+                fileNam = fileNam[:-4]
         else:
+            print(f'\n{Fore.RED}Folder ( {Fore.WHITE}{folderNam}{Fore.RED} ) does not exist.')
             mainFunction()
         createFile(folderNam, fileNam)
-    elif action == actionsArray[1]: # If writing to
+    elif action == actionsDictionary['actions'][3]['action']: # If writing to
         showFolders()
-        folderNam = str(input('Pick a folder: ')).lower().strip()
-        folderExists = checkIfFolderExists(folderNam)
+        print(Fore.YELLOW)
+        folderNam = str(input('\nPick a folder: ')).lower().strip()
+        folderExists = indicateIfFolderExists(folderNam)
         if folderExists == True:
             print(Fore.YELLOW)
             chckDirectory(folderNam)#Prints out text files available
+            print(f'\n{Fore.GREEN}Folder ( {Fore.WHITE}{folderNam}{Fore.GREEN} ) does exist.')
             print(Fore.YELLOW)
-            fileNam = str(input('Which file to write to: ')).lower().strip()
+            fileNam = str(input('Write to which file? '))
             fileMatchList(folderNam, fileNam)#Finds if this is an existing file
             print(Fore.YELLOW)
             text = str(input('What is your message: '))
             text = 'Entry: ' + text
-            if fileNam.endswith('.txt'):
+            if fileNam.endswith('.txt') == True:
                 fileNam = fileNam[:-4]
             writeToFile(folderNam, fileNam, text)
         else:
+            print(f'\n{Fore.RED}Folder ( {Fore.WHITE}{folderNam}{Fore.RED} ) does not exist.')
             mainFunction()
-    elif action == actionsArray[2]: # If reading a file
+    elif action == actionsDictionary['actions'][2]['action']: # If reading a file
         showFolders()
         print(Fore.YELLOW)
         folderNam = str(input('\nPick a folder: ')).lower().strip()
@@ -49,26 +55,47 @@ def assignAction(action):
             chckDirectory(folderNam)
             print(Fore.YELLOW)
             fileNam = str(input('Give a filename: ')).lower().strip()
-            if fileNam != fileNam.endswith('.txt'):
-                fileNam = fileNam + '.txt'
             fileMatchList(folderNam, fileNam)
             print(Style.RESET_ALL)
+            if fileNam.endswith('.txt'):
+                fileNam = fileNam[:-4]
             readFile(folderNam, fileNam)
         else:
             mainFunction()
-    elif action == actionsArray[3]:
-        chckDirectory(folder)
+    elif action == actionsDictionary['actions'][4]['action']:
+        showFolders()
         print(Fore.YELLOW)
-        fileNam = str(input('Give a filename: ')).lower().strip()
-        fileMatchList(fileNam)
-        updateFileEntry(fileNam)
-    elif action == actionsArray[4]: # If deleting a file
-        chckDirectory(folder)
+        folderNam = str(input('Input a folder: '))
+        folderExists = indicateIfFolderExists(folderNam)
+        if folderExists == True:
+            print(f'\n{Fore.GREEN}Folder ( {Fore.WHITE}{folderNam}{Fore.GREEN} ) does exist.')
+            chckDirectory(folderNam)
+            print(Fore.YELLOW)
+            fileNam = str(input('Give a filename: ')).lower().strip()
+            fileMatchList(folderNam, fileNam)
+            print(Style.RESET_ALL)
+            if fileNam.endswith('.txt'):
+                fileNam = fileNam[:-4]
+            updateFileEntry(folderNam, fileNam)
+        else:
+            print(f'\n{Fore.RED}Folder ( {Fore.WHITE}{folderNam}{Fore.RED} ) does not exist.')
+            mainFunction()
+    elif action == actionsDictionary['actions'][5]['action']: # If deleting a file
+        showFolders()
         print(Fore.YELLOW)
-        fileNam = str(input('Give a filename: ')).lower().strip()
-        fileMatchList(fileNam)
-        deleteFile(fileNam)
-    elif action == actionsArray[5]:
+        folderNam = str(input('Input a folder: '))
+        folderExists = indicateIfFolderExists(folderNam)
+        if folderExists == True:
+            print(f'\n{Fore.GREEN}Folder ( {Fore.WHITE}{folderNam}{Fore.GREEN} ) does exist.')
+            chckDirectory(folderNam)
+            print(Fore.YELLOW)
+            fileNam = str(input('Give a filename: ')).lower().strip()
+            fileMatchList(folderNam, fileNam)
+            print(Style.RESET_ALL)
+            if fileNam.endswith('.txt'):
+                fileNam = fileNam[:-4]
+            deleteFile(folderNam, fileNam)
+    elif action == actionsDictionary['actions'][1]['action']:
         newFolderName = str(input('New folder name: ')).lower().strip()
         indicatorVar = indicateIfFolderExists(newFolderName)
         if indicatorVar == True:
@@ -77,36 +104,39 @@ def assignAction(action):
         else:
             print(f'\n{Fore.GREEN}Folder ( {Fore.WHITE}{newFolderName}{Fore.GREEN} ) did not exist.')
             createFolder(newFolderName)
-    elif action == actionsArray[6]:
+    elif action == actionsDictionary['actions'][6]['action']:
+        showFolders()
         print('Which folder do you want to delete? ')
         deleteFolderName = str(input('Input a folder here: '))
         deleteFolder(deleteFolderName)
-    elif action == actionsArray[7]:
+    elif action == actionsDictionary['actions'][7]['action']:
         print(Fore.YELLOW)
         print('Commands Available: ')
-        for cmd in actionsArray[:]:
-            print(Fore.CYAN)
-            print(cmd)
+        for key in actionsDictionary.get('actions'):
+            print(key['action'] + ' => ' + key['actiondesc'])
         mainFunction()
-    elif action == actionsArray[8]: # If exiting the program
-        print(Fore.LIGHTBLUE_EX + '\nYou are exiting the program.')
+    elif action == actionsDictionary['actions'][8]['action']: # If exiting the program
+        print(Fore.LIGHTBLUE_EX + '\nYou are exiting the application.\n')
         print(exit())
     else:
         print(Fore.LIGHTMAGENTA_EX+'\nCommand does not exist.') # Command not found
         mainFunction()
 
-# ----------------- List out existing files ------------------
+# -----------------------------------------------------------------
+
 def chckDirectory(folder): # Checking directory for text files
     print(Style.RESET_ALL)
     print(Fore.YELLOW + '\nChoose from files:')
-    for file in os.listdir(f"C:/Users/User/Desktop/Notes_App/{folder}/"):
+    CWDFolderVar = getCWDstring(folder)
+    for file in os.listdir(f'{CWDFolderVar}'):
         if file.endswith('.txt'):
             print(Fore.WHITE + f'{file}')
     print('\n')
 
 def fileMatchList(folder, zfile):
-    folderFileList = os.listdir(f'C:/Users/User/Desktop/Notes_App/{folder}')[:]
-    if zfile.endswith('.txt'):
+    CWDFolderVar = getCWDstring(folder)
+    folderFileList = os.listdir(f'{CWDFolderVar}')[:]
+    if zfile.endswith('.txt') == True:
         if zfile not in folderFileList:
             print(Fore.RED+f'{zfile} was not found.')
             mainFunction()
@@ -120,12 +150,41 @@ def fileMatchList(folder, zfile):
         else:
             print(Fore.GREEN+f'You selected file ({Fore.WHITE} {zfile} {Fore.GREEN}).')
 
-      
+def checkIfFolderExists(checkFolder):
+    data = []
+    print(Fore.WHITE+'\n<================================')
+    for dir in next(os.walk('.'))[1]:
+        print('\n'+Fore.CYAN+'/'+dir)
+        data.append(dir)
+    print(Fore.WHITE+'\n<================================')
+        # data = '[' + ','.join(dir) + ']'
+    # compareDir = str(input('Type in folder: ')).lower().strip()
+    if checkFolder in data:
+        return True
+    else:
+        return False
+
+def indicateIfFolderExists(checkFolder):
+    data = []
+    for dir in next(os.walk('.'))[1]:
+        data.append(dir)
+    if checkFolder in data:
+        return True
+    else:
+        return False        
+
+def showFolders():
+    print(Fore.WHITE+'\n<================================')
+    for dir in next(os.walk('.'))[1]:  
+        print('\n'+Fore.CYAN+'/'+dir)
+    print(Fore.WHITE+'\n<================================')
+# ------------------------------------------------------------------
+
 # ----------------- (App Actions) Functions -----------------
 def createFile(folder, fileName):
     print(Style.RESET_ALL)
     open(f'./{folder}/{fileName}.txt','w')
-    print(Fore.GREEN + f'\n/{folder}/{fileName}.txt was created...')
+    print(Fore.GREEN + f'\n/{folder}/{Fore.WHITE}{fileName}.txt {Fore.GREEN}was created...')
     mainFunction()
 
 def readFile(folder, fileName):
@@ -149,9 +208,9 @@ def readFile(folder, fileName):
 
 # Trying to find string to update
 # Dynamically appending list item
-def updateFileEntry(file):
+def updateFileEntry(folder, file):
     # Open file for reading
-    rf = open(f'./notes_folder/{file}.txt', 'r')
+    rf = open(f'./{folder}/{file}.txt', 'r')
     listItems = rf.readlines()#store in variable
     rf.close()
     counter = -1
@@ -164,13 +223,13 @@ def updateFileEntry(file):
     print(Fore.YELLOW)
     inputstr = str(input('\nWhich item to update? ')).lower().strip()
     whatToSay = str(input('Update with? ')).lower().strip()
-    rf = open(f'./notes_folder/{file}.txt', 'r')
+    rf = open(f'./{folder}/{file}.txt', 'r')
     lines = rf.readlines()
-    codeToExec = f"""{inputstr} = '{whatToSay}' """
+    codeToExec = f"""{inputstr} = 'Entry: (Updated) {whatToSay}' """
     exec(codeToExec)
     rf.close()
     # Try to get newlines normal
-    wf = open(f'./notes_folder/{file}.txt', 'w')
+    wf = open(f'./{folder}/{file}.txt', 'w')
     lines = [line.rstrip('\n') for line in lines]
     lines = [line + '\n' for line in lines]
     wf.writelines(lines)
@@ -203,30 +262,30 @@ def writeToFile(folder, file, text):
         wf.close()
     mainFunction()
 
-def deleteFile(file):
+def deleteFile(folder, file):
     print(Style.RESET_ALL)
-    if os.path.exists(f'./notes_folder/{file}.txt'):
+    if os.path.exists(f'./{folder}/{file}.txt'):
         print(Back.RESET,Fore.RED)
         print('Are you sure you want to delete this file?')
         confirm = str(input('(yes/no): ')).lower().strip()
         if confirm == 'yes':
-            os.remove(f'./notes_folder/{file}.txt')
+            os.remove(f'./{folder}/{file}.txt')
             print('\n')
             print(Fore.RED + file + '.txt was deleted..')
             mainFunction()
         elif confirm == 'no':
             mainFunction()
-    while file not in fileList:
+    while file not in currentfolder:#WTF lets fix this...
         print(Fore.LIGHTRED_EX + 'File does not exist.')
-        chckDirectory()
+        chckDirectory(folder)
         print(Fore.YELLOW)
         file = str(input('Give a filename: ')).lower().strip()
-        if os.path.exists(f'./notes_folder/{file}.txt'):
+        if os.path.exists(f'./{folder}/{file}.txt'):
             print(Back.RESET,Fore.RED)
             print('Are you sure you want to delete this file?')
             confirm = str(input('(yes/no): ').lower()).strip()
             if confirm == 'yes':
-                os.remove(f'./notes_folder/{file}.txt')
+                os.remove(f'./{folder}/{file}.txt')
                 print('\n')
                 print(Fore.RED + file + '.txt was deleted..')
                 mainFunction()
@@ -236,49 +295,28 @@ def deleteFile(file):
 # Directory/Folder CRUD
 def createFolder(passedDirName):
     newFolder = f'{passedDirName}/'
+    newFolderVar = getCWDstring(passedDirName)
     try:
-        os.makedirs(f'C:/Users/User/Desktop/Notes_App/{newFolder}')
+        # Figure out how to get parent directory to be code generated.
+        os.makedirs(f'{newFolderVar}')
         print(f'{Fore.GREEN}Directory {Fore.WHITE}{newFolder}{Fore.GREEN} has been created ')
     except FileExistsError:
         print(f'{Fore.RED}Directory {Fore.WHITE}{newFolder}{Fore.RED} already exists')
     mainFunction()
 
-def checkIfFolderExists(checkFolder):
-    data = []
-    print(Fore.WHITE+'\n<================================')
-    for dir in next(os.walk('.'))[1]:
-        print('\n'+Fore.CYAN+'/'+dir)
-        data.append(dir)
-    print(Fore.WHITE+'\n<================================')
-        # data = '[' + ','.join(dir) + ']'
-    # compareDir = str(input('Type in folder: ')).lower().strip()
-    if checkFolder in data:
-        return True
-    else:
-        return False
-
-def indicateIfFolderExists(checkFolder):
-    data = []
-    for dir in next(os.walk('.'))[1]:
-        data.append(dir)
-    if checkFolder in data:
-        return True
-    else:
-        return False        
-
-def showFolders():
-    print(Fore.WHITE+'\n<================================')
-    for dir in next(os.walk('.'))[1]:
-        print('\n'+Fore.CYAN+'/'+dir)
-    print(Fore.WHITE+'\n<================================')
-
 def deleteFolder(dirName):
     directory = f'{dirName}'
-    parent = 'C:/Users/User/Desktop/Notes_App'
+    parent = os.getcwd()
     path = os.path.join(parent, directory)
     os.rmdir(path)
     print(Fore.GREEN+f"\nDirectory '%s' has been removed successfully" %directory)
     mainFunction()
+
+def getCWDstring(folder):
+    currentWorkingDir = os.getcwd()
+    currentfolder = f'{currentWorkingDir}/{folder}/'.replace('\\','/')
+    # listFiles = os.listdir(currentfolder) 
+    return currentfolder
 
 # ----------------- give action to assign function -----------------
 # Decide What you would like to do
