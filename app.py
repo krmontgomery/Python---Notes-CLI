@@ -5,7 +5,6 @@ import fileinput
 from actions_dictionary import actionsDictionary
 
 init(autoreset=False)
-fileList = os.listdir('C:/Users/User/Desktop/Notes_App/notes_folder')[:]
 
 # ----------------- Assigning Function based on user input -----------------
 def assignAction(action):
