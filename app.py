@@ -245,8 +245,11 @@ def writeToFile(folder, file, text):
     if rf == []:
         print(Style.RESET_ALL)
         NewEntryHeader = datetime.today().date()
+        now = datetime.now()
+        theTime = now.strftime('%I:%M %p')
+        header = f'{NewEntryHeader} {theTime}'
         wf = open(f'./{folder}/{file}.txt', 'a')
-        wf.write(f'{NewEntryHeader}: \n{text}')
+        wf.write(f'{header}: \n{text}')
         print(Fore.BLUE + '\nYou wrote:')
         print(Fore.CYAN + f'\n{text}')
         print(Fore.BLUE + f'\nTo {file}.txt')
@@ -254,8 +257,11 @@ def writeToFile(folder, file, text):
     else:
         print(Style.RESET_ALL)
         NewEntryHeader = datetime.today().date()
+        now = datetime.now()
+        theTime = now.strftime('%I:%M %p')
+        header = f'{NewEntryHeader} {theTime}'
         wf = open(f'./{folder}/{file}.txt', 'a')
-        wf.write(f'\n{NewEntryHeader}: \n{text}')
+        wf.write(f'\n{header}: \n{text}')
         print(Fore.BLUE + '\nYou wrote:')
         print(Fore.CYAN + f'\n{text}')
         print(Fore.BLUE + f'\nTo {file}.txt')
