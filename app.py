@@ -280,7 +280,7 @@ def deleteFile(folder, file):
             mainFunction()
         elif confirm == 'no':
             mainFunction()
-    while file not in currentfolder:#WTF lets fix this...
+    while file not in folder:#WTF lets fix this...
         print(Fore.LIGHTRED_EX + 'File does not exist.')
         chckDirectory(folder)
         print(Fore.YELLOW)
