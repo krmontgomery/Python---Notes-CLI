@@ -10,7 +10,7 @@ init(autoreset=False)
 def assignAction(action):
     if action == actionsDictionary['actions'][0]['action']: # If Create a File
         print(Fore.YELLOW)
-        showFolders()
+        showall_inparent()
         print(Fore.YELLOW+'\n')
         folderNam = str(input('Pick a folder: ')).lower().strip()
         folderExists = indicateIfFolderExists(folderNam)
@@ -25,7 +25,7 @@ def assignAction(action):
             mainFunction()
         createFile(folderNam, fileNam)
     elif action == actionsDictionary['actions'][3]['action']: # If writing to
-        showFolders()
+        showall_inparent()
         print(Fore.YELLOW)
         folderNam = str(input('\nPick a folder: ')).lower().strip()
         folderExists = indicateIfFolderExists(folderNam)
@@ -46,7 +46,7 @@ def assignAction(action):
             print(f'\n{Fore.RED}Folder ( {Fore.WHITE}{folderNam}{Fore.RED} ) does not exist.')
             mainFunction()
     elif action == actionsDictionary['actions'][2]['action']: # If reading a file
-        showFolders()
+        showall_inparent()
         print(Fore.YELLOW)
         folderNam = str(input('\nPick a folder: ')).lower().strip()
         folderExists = checkIfFolderExists(folderNam)
@@ -62,7 +62,7 @@ def assignAction(action):
         else:
             mainFunction()
     elif action == actionsDictionary['actions'][4]['action']:
-        showFolders()
+        showall_inparent()
         print(Fore.YELLOW)
         folderNam = str(input('Input a folder: '))
         folderExists = indicateIfFolderExists(folderNam)
@@ -80,7 +80,7 @@ def assignAction(action):
             print(f'\n{Fore.RED}Folder ( {Fore.WHITE}{folderNam}{Fore.RED} ) does not exist.')
             mainFunction()
     elif action == actionsDictionary['actions'][5]['action']: # If deleting a file
-        showFolders()
+        showall_inparent()
         print(Fore.YELLOW)
         folderNam = str(input('Input a folder: '))
         folderExists = indicateIfFolderExists(folderNam)
@@ -104,7 +104,7 @@ def assignAction(action):
             print(f'\n{Fore.GREEN}Folder ( {Fore.WHITE}{newFolderName}{Fore.GREEN} ) did not exist.')
             createFolder(newFolderName)
     elif action == actionsDictionary['actions'][6]['action']:
-        showFolders()
+        showall_inparent()
         print('Which folder do you want to delete? ')
         deleteFolderName = str(input('Input a folder here: '))
         deleteFolder(deleteFolderName)
@@ -170,7 +170,23 @@ def indicateIfFolderExists(checkFolder):
     if checkFolder in data:
         return True
     else:
-        return False        
+        return False    
+
+def showall_inparent():
+    print(Fore.WHITE+'\n<================================================')
+    # for dirname, dirnames, filenames in os.walk('.'):
+    for one, two, three in os.walk('.'):
+        print(one)
+        # for subdirname in dirnames:
+        #     print(Fore.CYAN + os.path.join(dirname, subdirname))
+        for filename in three:
+            print(Fore.CYAN + os.path.join(one, filename))  
+        # Advanced usage:
+        # editing the 'dirnames' list will stop os.walk() from recursing into there.
+        if '.git' in two:
+            # don't go into any .git directories.
+            two.remove('.git')
+    print(Fore.WHITE+'\n<================================================')  
 
 def showFolders():
     print(Fore.WHITE+'\n<================================')
