@@ -176,7 +176,23 @@ def showall_inparent():
     print(Fore.WHITE+'\n<================================================')
     # for dirname, dirnames, filenames in os.walk('.'):
     for one, two, three in os.walk('.'):
-        print(one)
+        # print(one)
+        # print(two)
+        # print(three)
+        if '__pycache__' in two:
+            two.remove('__pycache__')
+        if '.gitignore' in three:
+            three.remove('.gitignore')
+        if 'carbon.png' in three:
+            three.remove('carbon.png')
+        if 'Pipfile' in three:
+            three.remove('Pipfile')
+        if 'README.md' in three:
+            three.remove('README.md')
+        if 'actions_dictionary.py' in three:
+            three.remove('actions_dictionary.py')
+        if 'app.py' in three:
+            three.remove('app.py')
         # for subdirname in dirnames:
         #     print(Fore.CYAN + os.path.join(dirname, subdirname))
         for filename in three:
@@ -186,7 +202,7 @@ def showall_inparent():
         if '.git' in two:
             # don't go into any .git directories.
             two.remove('.git')
-    print(Fore.WHITE+'\n<================================================')  
+    print(Fore.WHITE+'<================================================')  
 
 def showFolders():
     print(Fore.WHITE+'\n<================================')
