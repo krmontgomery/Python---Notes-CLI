@@ -5,13 +5,12 @@ import fileinput
 from actions_dictionary import actionsDictionary
 
 init(autoreset=False)
-fileList = os.listdir('C:/Users/User/Desktop/Notes_App/notes_folder')[:]
 
 # ----------------- Assigning Function based on user input -----------------
 def assignAction(action):
     if action == actionsDictionary['actions'][0]['action']: # If Create a File
         print(Fore.YELLOW)
-        showFolders()
+        showall_inparent()
         print(Fore.YELLOW+'\n')
         folderNam = str(input('Pick a folder: ')).lower().strip()
         folderExists = indicateIfFolderExists(folderNam)
@@ -26,7 +25,7 @@ def assignAction(action):
             mainFunction()
         createFile(folderNam, fileNam)
     elif action == actionsDictionary['actions'][3]['action']: # If writing to
-        showFolders()
+        showall_inparent()
         print(Fore.YELLOW)
         folderNam = str(input('\nPick a folder: ')).lower().strip()
         folderExists = indicateIfFolderExists(folderNam)
@@ -47,6 +46,7 @@ def assignAction(action):
             print(f'\n{Fore.RED}Folder ( {Fore.WHITE}{folderNam}{Fore.RED} ) does not exist.')
             mainFunction()
     elif action == actionsDictionary['actions'][2]['action']: # If reading a file
+        # showall_inparent()
         showFolders()
         print(Fore.YELLOW)
         folderNam = str(input('\nPick a folder: ')).lower().strip()
@@ -81,7 +81,7 @@ def assignAction(action):
             print(f'\n{Fore.RED}Folder ( {Fore.WHITE}{folderNam}{Fore.RED} ) does not exist.')
             mainFunction()
     elif action == actionsDictionary['actions'][5]['action']: # If deleting a file
-        showFolders()
+        showall_inparent()
         print(Fore.YELLOW)
         folderNam = str(input('Input a folder: '))
         folderExists = indicateIfFolderExists(folderNam)
@@ -171,13 +171,51 @@ def indicateIfFolderExists(checkFolder):
     if checkFolder in data:
         return True
     else:
-        return False        
+        return False    
+
+def showall_inparent():
+    print(Fore.WHITE+'\n<================================================')
+    # for dirname, dirnames, filenames in os.walk('.'):
+    for one, two, three in os.walk('.'):
+        # print(one)
+        # print(two)
+        # print(three)
+        if '__pycache__' in two:
+            two.remove('__pycache__')
+        if '.gitignore' in three:
+            three.remove('.gitignore')
+        if 'carbon.png' in three:
+            three.remove('carbon.png')
+        if 'Pipfile' in three:
+            three.remove('Pipfile')
+        if 'README.md' in three:
+            three.remove('README.md')
+        if 'actions_dictionary.py' in three:
+            three.remove('actions_dictionary.py')
+        if 'app.py' in three:
+            three.remove('app.py')
+        for subdirname in two:
+            print(Fore.CYAN + os.path.join(one, subdirname))
+
+        # for filename in three:
+        #     print(Fore.CYAN + os.path.join(one, filename))  
+        # Advanced usage:
+        # editing the 'dirnames' list will stop os.walk() from recursing into there.
+        if '.git' in two:
+            # don't go into any .git directories.
+            two.remove('.git')
+    print(Fore.WHITE+'<================================================')  
 
 def showFolders():
-    print(Fore.WHITE+'\n<================================')
-    for dir in next(os.walk('.'))[1]:  
-        print('\n'+Fore.CYAN+'/'+dir)
-    print(Fore.WHITE+'\n<================================')
+    print(Fore.WHITE+'\n<================================================')
+    for one, two, three in os.walk('.'):
+        if '.git' in two:
+            two.remove('.git')
+        if '__pycache__' in two:
+            two.remove('__pycache__')
+        for subdirname in two:
+            print(Fore.CYAN + os.path.join(one, subdirname))
+    print(Fore.WHITE+'<================================================')
 # ------------------------------------------------------------------
 
 # ----------------- (App Actions) Functions -----------------
@@ -245,8 +283,11 @@ def writeToFile(folder, file, text):
     if rf == []:
         print(Style.RESET_ALL)
         NewEntryHeader = datetime.today().date()
+        now = datetime.now()
+        theTime = now.strftime('%I:%M %p')
+        header = f'{NewEntryHeader} {theTime}'
         wf = open(f'./{folder}/{file}.txt', 'a')
-        wf.write(f'{NewEntryHeader}: \n{text}')
+        wf.write(f'{header}: \n{text}')
         print(Fore.BLUE + '\nYou wrote:')
         print(Fore.CYAN + f'\n{text}')
         print(Fore.BLUE + f'\nTo {file}.txt')
@@ -254,8 +295,11 @@ def writeToFile(folder, file, text):
     else:
         print(Style.RESET_ALL)
         NewEntryHeader = datetime.today().date()
+        now = datetime.now()
+        theTime = now.strftime('%I:%M %p')
+        header = f'{NewEntryHeader} {theTime}'
         wf = open(f'./{folder}/{file}.txt', 'a')
-        wf.write(f'\n{NewEntryHeader}: \n{text}')
+        wf.write(f'\n{header}: \n{text}')
         print(Fore.BLUE + '\nYou wrote:')
         print(Fore.CYAN + f'\n{text}')
         print(Fore.BLUE + f'\nTo {file}.txt')
@@ -275,7 +319,7 @@ def deleteFile(folder, file):
             mainFunction()
         elif confirm == 'no':
             mainFunction()
-    while file not in currentfolder:#WTF lets fix this...
+    while file not in folder:#WTF lets fix this...
         print(Fore.LIGHTRED_EX + 'File does not exist.')
         chckDirectory(folder)
         print(Fore.YELLOW)
