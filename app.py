@@ -46,7 +46,8 @@ def assignAction(action):
             print(f'\n{Fore.RED}Folder ( {Fore.WHITE}{folderNam}{Fore.RED} ) does not exist.')
             mainFunction()
     elif action == actionsDictionary['actions'][2]['action']: # If reading a file
-        showall_inparent()
+        # showall_inparent()
+        showFolders()
         print(Fore.YELLOW)
         folderNam = str(input('\nPick a folder: ')).lower().strip()
         folderExists = checkIfFolderExists(folderNam)
@@ -193,10 +194,11 @@ def showall_inparent():
             three.remove('actions_dictionary.py')
         if 'app.py' in three:
             three.remove('app.py')
-        # for subdirname in dirnames:
-        #     print(Fore.CYAN + os.path.join(dirname, subdirname))
-        for filename in three:
-            print(Fore.CYAN + os.path.join(one, filename))  
+        for subdirname in two:
+            print(Fore.CYAN + os.path.join(one, subdirname))
+
+        # for filename in three:
+        #     print(Fore.CYAN + os.path.join(one, filename))  
         # Advanced usage:
         # editing the 'dirnames' list will stop os.walk() from recursing into there.
         if '.git' in two:
@@ -205,10 +207,15 @@ def showall_inparent():
     print(Fore.WHITE+'<================================================')  
 
 def showFolders():
-    print(Fore.WHITE+'\n<================================')
-    for dir in next(os.walk('.'))[1]:  
-        print('\n'+Fore.CYAN+'/'+dir)
-    print(Fore.WHITE+'\n<================================')
+    print(Fore.WHITE+'\n<================================================')
+    for one, two, three in os.walk('.'):
+        if '.git' in two:
+            two.remove('.git')
+        if '__pycache__' in two:
+            two.remove('__pycache__')
+        for subdirname in two:
+            print(Fore.CYAN + os.path.join(one, subdirname))
+    print(Fore.WHITE+'<================================================')
 # ------------------------------------------------------------------
 
 # ----------------- (App Actions) Functions -----------------
