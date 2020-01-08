@@ -47,7 +47,7 @@ def assignAction(action):
             mainFunction()
     elif action == actionsDictionary['actions'][2]['action']: # If reading a file
         # showall_inparent()
-        showFolders()
+        show_folder_contents()
         print(Fore.YELLOW)
         folderNam = str(input('\nPick a folder: ')).lower().strip()
         folderExists = checkIfFolderExists(folderNam)
@@ -194,11 +194,11 @@ def showall_inparent():
             three.remove('actions_dictionary.py')
         if 'app.py' in three:
             three.remove('app.py')
-        for subdirname in two:
-            print(Fore.CYAN + os.path.join(one, subdirname))
+        # for subdirname in two:
+        #     print(Fore.CYAN + os.path.join(one, subdirname))
 
-        # for filename in three:
-        #     print(Fore.CYAN + os.path.join(one, filename))  
+        for filename in three:
+            print(Fore.CYAN + os.path.join(one, filename))  
         # Advanced usage:
         # editing the 'dirnames' list will stop os.walk() from recursing into there.
         if '.git' in two:
@@ -215,6 +215,38 @@ def showFolders():
             two.remove('__pycache__')
         for subdirname in two:
             print(Fore.CYAN + os.path.join(one, subdirname))
+    print(Fore.WHITE+'<================================================')
+
+def show_folder_contents():
+    print(Fore.WHITE+'\n<================================================')
+    for one, two, three in os.walk('.'):
+        if '.' in two:
+            two.remove('.')
+        if '.git' in two:
+            two.remove('.git')
+        if '__pycache__' in two:
+            two.remove('__pycache__')
+        if '__pycache__' in two:
+            two.remove('__pycache__')
+        if '.gitignore' in three:
+            three.remove('.gitignore')
+        if 'carbon.png' in three:
+            three.remove('carbon.png')
+        if 'Pipfile' in three:
+            three.remove('Pipfile')
+        if 'README.md' in three:
+            three.remove('README.md')
+        if 'actions_dictionary.py' in three:
+            three.remove('actions_dictionary.py')
+        if 'app.py' in three:
+            three.remove('app.py')
+        print('\n<==============')
+        print(one)
+        print('<==============')
+        for files in three:
+            print(files)
+        # for files in three:
+        #     print(Fore.CYAN + os.path.join(one, files))
     print(Fore.WHITE+'<================================================')
 # ------------------------------------------------------------------
 
