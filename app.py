@@ -63,7 +63,7 @@ def assignAction(action):
         else:
             mainFunction()
     elif action == actionsDictionary['actions'][4]['action']:
-        showall_inparent()
+        showFolders()
         print(Fore.YELLOW)
         folderNam = str(input('Input a folder: '))
         folderExists = indicateIfFolderExists(folderNam)
@@ -105,7 +105,7 @@ def assignAction(action):
             print(f'\n{Fore.GREEN}Folder ( {Fore.WHITE}{newFolderName}{Fore.GREEN} ) did not exist.')
             createFolder(newFolderName)
     elif action == actionsDictionary['actions'][6]['action']:
-        showall_inparent()
+        showFolders()
         print('Which folder do you want to delete? ')
         deleteFolderName = str(input('Input a folder here: '))
         deleteFolder(deleteFolderName)
