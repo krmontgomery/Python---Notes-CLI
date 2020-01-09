@@ -220,12 +220,8 @@ def showFolders():
 def show_folder_contents():
     print(Fore.WHITE+'\n<================================================')
     for one, two, three in os.walk('.'):
-        if '.' in two:
-            two.remove('.')
         if '.git' in two:
             two.remove('.git')
-        if '__pycache__' in two:
-            two.remove('__pycache__')
         if '__pycache__' in two:
             two.remove('__pycache__')
         if '.gitignore' in three:
@@ -240,13 +236,14 @@ def show_folder_contents():
             three.remove('actions_dictionary.py')
         if 'app.py' in three:
             three.remove('app.py')
-        print('\n<==============')
-        print(one)
-        print('<==============')
+        if one == '.':
+            one = print(Fore.LIGHTBLUE_EX + '***Folders Listed Below***')
+        else:
+            print(Fore.YELLOW + '<==============')
+            print(f'{Fore.LIGHTWHITE_EX}{one}')
+            print(Fore.YELLOW + '<================')
         for files in three:
-            print(files)
-        # for files in three:
-        #     print(Fore.CYAN + os.path.join(one, files))
+            print(f'{Fore.WHITE}{files}')
     print(Fore.WHITE+'<================================================')
 # ------------------------------------------------------------------
 
