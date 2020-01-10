@@ -35,5 +35,9 @@ actionsDictionary = { "actions":
                         {
                             "action": "/exit",
                             "actiondesc": "Exit the CLI application."
+                        },
+                        {
+                            "action": "/showall",
+                            "actiondesc": "Shows all subdirectories and files within parent."
                         }]
                     }
