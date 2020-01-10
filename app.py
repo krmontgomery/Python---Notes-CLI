@@ -1,20 +1,23 @@
+'''This is a CRUD based CLI program.'''
+
 import os
 from datetime import datetime
 from colorama import Fore, Back, Style, init
-import fileinput
 from actions_dictionary import actionsDictionary
 
 init(autoreset=False)
 
 # ----------------- Assigning Function based on user input -----------------
-def assignAction(action):
+def assign_action(action):
+    '''Depending on the action input, this function
+     gives directions to perform the desired outcome.'''
     if action == actionsDictionary['actions'][0]['action']: # If Create a File
         print(Fore.YELLOW)
         show_folders()
         print(Fore.YELLOW+'\n')
         folder_nam = str(input('Pick a folder: ')).lower().strip()
-        folderExists = indicate_if_folder_exists(folder_nam)
-        if folderExists == True:
+        folder_exists = indicate_if_folder_exists(folder_nam)
+        if folder_exists == True:
             print(f'\n{Fore.GREEN}Folder ( {Fore.WHITE}{folder_nam}{Fore.GREEN} ) does exist.')
             print(Fore.YELLOW)
             file_nam = str(input('Input new file_name: '))
@@ -28,14 +31,14 @@ def assignAction(action):
         show_folders()
         print(Fore.YELLOW)
         folder_nam = str(input('\nPick a folder: ')).lower().strip()
-        folderExists = indicate_if_folder_exists(folder_nam)
-        if folderExists == True:
+        folder_exists = indicate_if_folder_exists(folder_nam)
+        if folder_exists == True:
             print(Fore.YELLOW)
             chck_directory(folder_nam)#Prints out text files available
             print(f'\n{Fore.GREEN}Folder ( {Fore.WHITE}{folder_nam}{Fore.GREEN} ) does exist.')
             print(Fore.YELLOW)
             file_nam = str(input('Write to which file? '))
-            fileMatchList(folder_nam, file_nam)#Finds if this is an existing file
+            file_match_list(folder_nam, file_nam)#Finds if this is an existing file
             print(Fore.YELLOW)
             text = str(input('What is your message: '))
             text = 'Entry: ' + text
@@ -49,12 +52,12 @@ def assignAction(action):
         show_folders()
         print(Fore.YELLOW)
         folder_nam = str(input('\nPick a folder: ')).lower().strip()
-        folderExists = checkIfFolderExists(folder_nam)
-        if folderExists == True:
+        folder_exists = checkif_folder_exists(folder_nam)
+        if folder_exists == True:
             chck_directory(folder_nam)
             print(Fore.YELLOW)
             file_nam = str(input('Give a file_name: ')).lower().strip()
-            fileMatchList(folder_nam, file_nam)
+            file_match_list(folder_nam, file_nam)
             print(Style.RESET_ALL)
             if file_nam.endswith('.txt'):
                 file_nam = file_nam[:-4]
@@ -65,13 +68,13 @@ def assignAction(action):
         show_folders()
         print(Fore.YELLOW)
         folder_nam = str(input('Input a folder: '))
-        folderExists = indicate_if_folder_exists(folder_nam)
-        if folderExists == True:
+        folder_exists = indicate_if_folder_exists(folder_nam)
+        if folder_exists == True:
             print(f'\n{Fore.GREEN}Folder ( {Fore.WHITE}{folder_nam}{Fore.GREEN} ) does exist.')
             chck_directory(folder_nam)
             print(Fore.YELLOW)
             file_nam = str(input('Give a file_name: ')).lower().strip()
-            fileMatchList(folder_nam, file_nam)
+            file_match_list(folder_nam, file_nam)
             print(Style.RESET_ALL)
             if file_nam.endswith('.txt'):
                 file_nam = file_nam[:-4]
@@ -83,17 +86,17 @@ def assignAction(action):
         show_folders()
         print(Fore.YELLOW)
         folder_nam = str(input('Input a folder: '))
-        folderExists = indicate_if_folder_exists(folder_nam)
-        if folderExists == True:
+        folder_exists = indicate_if_folder_exists(folder_nam)
+        if folder_exists == True:
             print(f'\n{Fore.GREEN}Folder ( {Fore.WHITE}{folder_nam}{Fore.GREEN} ) does exist.')
             chck_directory(folder_nam)
             print(Fore.YELLOW)
             file_nam = str(input('Give a file_name: ')).lower().strip()
-            fileMatchList(folder_nam, file_nam)
+            file_match_list(folder_nam, file_nam)
             print(Style.RESET_ALL)
             if file_nam.endswith('.txt'):
                 file_nam = file_nam[:-4]
-            deleteFile(folder_nam, file_nam)
+            delete_file(folder_nam, file_nam)
     elif action == actionsDictionary['actions'][1]['action']:
         newfolder_name = str(input('New folder name: ')).lower().strip()
         indicatorVar = indicate_if_folder_exists(newfolder_name)
@@ -127,6 +130,7 @@ def assignAction(action):
 # -----------------------------------------------------------------
 
 def chck_directory(folder): # Checking directory for text files
+    '''Prints a list of files from a folder.'''
     print(Style.RESET_ALL)
     print(Fore.YELLOW + '\nChoose from files:')
     CWDFolderVar = get_cwd_string(folder)
@@ -135,7 +139,8 @@ def chck_directory(folder): # Checking directory for text files
             print(Fore.WHITE + f'{file}')
     print('\n')
 
-def fileMatchList(folder, zfile):
+def file_match_list(folder, zfile):
+    '''Checks to see if the file matches the input from the user. Otherwise, Exit.'''
     CWDFolderVar = get_cwd_string(folder)
     folderFileList = os.listdir(f'{CWDFolderVar}')[:]
     if zfile.endswith('.txt') == True:
@@ -152,7 +157,8 @@ def fileMatchList(folder, zfile):
         else:
             print(Fore.GREEN+f'You selected file ({Fore.WHITE} {zfile} {Fore.GREEN}).')
 
-def checkIfFolderExists(checkFolder):
+def checkif_folder_exists(check_folder):
+    '''Checks to see if folder exists.'''
     data = []
     # print(Fore.WHITE+'\n<================================')
     for dir in next(os.walk('.'))[1]:
@@ -161,16 +167,17 @@ def checkIfFolderExists(checkFolder):
     # print(Fore.WHITE+'\n<================================')
         # data = '[' + ','.join(dir) + ']'
     # compareDir = str(input('Type in folder: ')).lower().strip()
-    if checkFolder in data:
+    if check_folder in data:
         return True
     else:
         return False
 
-def indicate_if_folder_exists(checkFolder):
+def indicate_if_folder_exists(check_folder):
+    '''Figure out if the input folder name exists.'''
     data = []
     for dir in next(os.walk('.'))[1]:
         data.append(dir)
-    if checkFolder in data:
+    if check_folder in data:
         return True
     else:
         return False
@@ -254,12 +261,14 @@ def show_folder_contents():
 
 # ----------------- (App Actions) Functions -----------------
 def create_file(folder, file_name):
+    '''Create a file.'''
     print(Style.RESET_ALL)
     open(f'./{folder}/{file_name}.txt','w')
     print(Fore.GREEN + f'\n/{folder}/{Fore.WHITE}{file_name}.txt {Fore.GREEN}was created...')
     main_function()
 
 def read_file(folder, file_name):
+    '''Read from a specific file.'''
     print(Style.RESET_ALL)
     if file_name.endswith('.txt'):
         file_name = file_name[:-4]
@@ -281,7 +290,7 @@ def read_file(folder, file_name):
 # Trying to find string to update
 # Dynamically appending list item
 def update_file_entry(folder, file):
-    # Open file for reading
+    '''Update a file entry.'''
     rf = open(f'./{folder}/{file}.txt', 'r')
     listItems = rf.readlines()#store in variable
     rf.close()
@@ -312,6 +321,7 @@ def update_file_entry(folder, file):
 
 
 def write_to_file(folder, file, text):
+    '''Make an entry to a file.'''
     rf = open(f'./{folder}/{file}.txt', 'r')
     rf = rf.readlines()
     if rf == []:
@@ -340,7 +350,8 @@ def write_to_file(folder, file, text):
         wf.close()
     main_function()
 
-def deleteFile(folder, file):
+def delete_file(folder, file):
+    '''Delete a specific file.'''
     print(Style.RESET_ALL)
     if os.path.exists(f'./{folder}/{file}.txt'):
         print(Back.RESET,Fore.RED)
@@ -408,7 +419,7 @@ def main_function():
     print(Fore.YELLOW + 'Example Commands: /createfile /writeto /commands /exit')
     action = str(input('Input your action: ')).lower().strip()
     # decide what file we're going to do what with
-    assignAction(action)
+    assign_action(action)
 
 # Also need to adjust create and write to files to take in another parameter
 # The parameter being which directory...
