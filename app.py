@@ -306,7 +306,7 @@ def update_file_entry(folder, file):
     whatToSay = str(input('Update with? ')).lower().strip()
     rf = open(f'./{folder}/{file}.txt', 'r')
     lines = rf.readlines()
-    codeToExec = f"""{inputstr} = 'Entry: (Updated) {whatToSay}' """
+    codeToExec = f"""{inputstr} = "Entry: (Updated) {whatToSay}" """
     exec(codeToExec)
     rf.close()
     # Try to get newlines normal
