@@ -1,39 +1,42 @@
-
-actionsDictionary = { "actions":
-                        [{
-                            "action": "/createfile",
-                            "actiondesc": "Create a new file."
-                        },
-                        {
-                            "action": "/createdir",
-                            "actiondesc": "Create a directory."
-                        },
-                        {
-                            "action": "/readfrom",
-                            "actiondesc": "Read from a specific file."
-                        },
-                        {
-                            "action": "/writeto",
-                            "actiondesc": "Write to a specific file."
-                        },
-                        {
-                            "action": "/update",
-                            "actiondesc": "Update an entry in a specific file."
-                        },
-                        {
-                            "action": "/deletefile",
-                            "actiondesc": "Delete a specific file."
-                        },
-                        {
-                            "action": "/deletedir",
-                            "actiondesc": "Delete an empty subfolder."
-                        },
-                        {
-                            "action": "/commands",
-                            "actiondesc": "Display all available commands."
-                        },    
-                        {
-                            "action": "/exit",
-                            "actiondesc": "Exit the CLI application."
-                        }]
-                    }
+action_dictionary = {
+    0:{
+        "action": "/createfile",
+        "actiondesc": "Create a new file."
+    },
+    1:{
+        "action": "/createdir",
+        "actiondesc": "Create a directory."
+    },
+    2:{
+        "action": "/readfrom",
+        "actiondesc": "Read from a specific file."
+    },
+    3:{
+        "action": "/writeto",
+        "actiondesc": "Write to a specific file."
+    },
+    4:{
+        "action": "/update",
+        "actiondesc": "Update an entry in a specific file."
+    },
+    5:{
+        "action": "/deletefile",
+        "actiondesc": "Delete a specific file."    
+    },
+    6:{
+        "action": "/deletedir",
+        "actiondesc": "Delete an empty subfolder."    
+    },
+    7:{
+        "action": "/commands",
+        "actiondesc": "Display all available commands."
+    },
+    8:{
+        "action": "/exit",
+        "actiondesc": "Exit the CLI application."
+    },
+    9:{
+        "action": "/showall",
+        "actiondesc": "Shows all subdirectories and files within parent."
+    }
+}
