@@ -61,6 +61,10 @@ def showall_inparent():
             three.remove('actions_dictionary.py')
         if 'app.py' in three:
             three.remove('app.py')
+        if 'actions.py' in three:
+            three.remove('actions.py')
+        if 'ifs.py' in three:
+            three.remove('ifs.py')
         # for subdirname in two:
         #     print(Fore.CYAN + os.path.join(one, subdirname))
 
@@ -105,6 +109,10 @@ def show_folder_contents():
             three.remove('actions_dictionary.py')
         if 'app.py' in three:
             three.remove('app.py')
+        if 'actions.py' in three:
+            three.remove('actions.py')
+        if 'ifs.py' in three:
+            three.remove('ifs.py')
         if one == '.':
             one = print(Fore.LIGHTBLUE_EX + '***Subdirectories and their files listed below***')
         else:
