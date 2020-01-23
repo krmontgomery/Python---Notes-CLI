@@ -9,7 +9,9 @@ from actions import delete_file, delete_folder, write_to_file, read_file
 
 init(autoreset=False)
 
-# ----------------- Assigning Function based on user input -----------------
+# ----------------------------------------------------------------------------
+# Function that assigns order of operations given the user input
+# ----------------------------------------------------------------------------
 def assign_action(action):
     '''Depending on the action input, this function
      gives directions to perform the desired outcome.'''
@@ -19,11 +21,11 @@ def assign_action(action):
         print(Fore.YELLOW+'\n')
         folder_nam = str(input('Pick a folder: ')).lower().strip()
         folder_exists = indicate_if_folder_exists(folder_nam)
-        if folder_exists == True:
+        if folder_exists is True:
             print(f'\n{Fore.GREEN}Folder ( {Fore.WHITE}{folder_nam}{Fore.GREEN} ) does exist.')
             print(Fore.YELLOW)
             file_nam = str(input('Input new file_name: '))
-            if file_nam.endswith('.txt') == True:
+            if file_nam.endswith('.txt') is True:
                 file_nam = file_nam[:-4]
         else:
             print(f'\n{Fore.RED}Folder ( {Fore.WHITE}{folder_nam}{Fore.RED} ) does not exist.')
@@ -35,7 +37,7 @@ def assign_action(action):
         print(Fore.YELLOW)
         folder_nam = str(input('\nPick a folder: ')).lower().strip()
         folder_exists = indicate_if_folder_exists(folder_nam)
-        if folder_exists == True:
+        if folder_exists is True:
             print(Fore.YELLOW)
             chck_directory(folder_nam)#Prints out text files available
             print(f'\n{Fore.GREEN}Folder ( {Fore.WHITE}{folder_nam}{Fore.GREEN} ) does exist.')
@@ -45,7 +47,7 @@ def assign_action(action):
             print(Fore.YELLOW)
             text = str(input('What is your message: '))
             text = 'Entry: ' + text
-            if file_nam.endswith('.txt') == True:
+            if file_nam.endswith('.txt') is True:
                 file_nam = file_nam[:-4]
             write_to_file(folder_nam, file_nam, text)
             main_function()
@@ -57,7 +59,7 @@ def assign_action(action):
         print(Fore.YELLOW)
         folder_nam = str(input('\nPick a folder: ')).lower().strip()
         folder_exists = checkif_folder_exists(folder_nam)
-        if folder_exists == True:
+        if folder_exists is True:
             chck_directory(folder_nam)
             print(Fore.YELLOW)
             file_nam = str(input('Give a file_name: ')).lower().strip()
@@ -74,7 +76,7 @@ def assign_action(action):
         print(Fore.YELLOW)
         folder_nam = str(input('Input a folder: '))
         folder_exists = indicate_if_folder_exists(folder_nam)
-        if folder_exists == True:
+        if folder_exists is True:
             print(f'\n{Fore.GREEN}Folder ( {Fore.WHITE}{folder_nam}{Fore.GREEN} ) does exist.')
             chck_directory(folder_nam)
             print(Fore.YELLOW)
@@ -93,7 +95,7 @@ def assign_action(action):
         print(Fore.YELLOW)
         folder_nam = str(input('Input a folder: '))
         folder_exists = indicate_if_folder_exists(folder_nam)
-        if folder_exists == True:
+        if folder_exists is True:
             print(f'\n{Fore.GREEN}Folder ( {Fore.WHITE}{folder_nam}{Fore.GREEN} ) does exist.')
             chck_directory(folder_nam)
             print(Fore.YELLOW)
@@ -105,8 +107,8 @@ def assign_action(action):
             delete_file(folder_nam, file_nam)
     elif disperse_action(action) == '/createdir':
         newfolder_name = str(input('New folder name: ')).lower().strip()
-        indicatorVar = indicate_if_folder_exists(newfolder_name)
-        if indicatorVar == True:
+        indicator_var = indicate_if_folder_exists(newfolder_name)
+        if indicator_var is True:
             print(f'\n{Fore.RED}Folder ( {Fore.WHITE}{newfolder_name}{Fore.RED} ) exists...')
             main_function()
         else:
@@ -115,10 +117,9 @@ def assign_action(action):
             main_function()
     elif disperse_action(action) == '/deletedir':
         show_folders()
-        print('Which folder do you want to delete? ')
+        print(f'{Fore.YELLOW}Which folder do you want to delete?')
         delete_folder_name = str(input('Input a folder here: '))
         delete_folder(delete_folder_name)
-        main_function()
     elif disperse_action(action) == '/commands':
         print(Fore.MAGENTA)
         print('Commands Available: ')
@@ -138,7 +139,9 @@ def assign_action(action):
         main_function()
 
 # -----------------------------------------------------------------
-def does_action_exists(action):
+# Dealing with actions
+# -----------------------------------------------------------------
+def does_action_exist(action):
     '''Decide if action entered is one that exists.'''
     actions_var = action_dictionary
     for act in actions_var:
@@ -147,17 +150,21 @@ def does_action_exists(action):
             return True
 
 def disperse_action(action):
+    '''If action exists, this function will return the same command in a string.'''
     my_action = action
-    indicator = does_action_exists(my_action)
-    if indicator == True:
+    indicator = does_action_exist(my_action)
+    if indicator is True:
         actions_var = action_dictionary
         for act in actions_var:
             our_action = action_dictionary[act]['action']
             if action == our_action:
                 return our_action
 
-# ----------------- give action to assign function -----------------
+# -----------------  -----------------
+#   | Main Function
+# ------------------------------------
 # Decide What you would like to do
+# ------------------------------------
 def main_function():
     '''CLI Program main function.'''
     print(Style.RESET_ALL)
@@ -170,6 +177,9 @@ def main_function():
 # Also need to adjust create and write to files to take in another parameter
 # The parameter being which directory...
 
+# ----------------------------------
+# Run Program
+# ----------------------------------
 if __name__ == "__main__":
     main_function()
-
+# ----------------------------------

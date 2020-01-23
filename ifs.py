@@ -8,8 +8,8 @@ def chck_directory(folder): # Checking directory for text files
     '''Prints a list of files from a folder.'''
     print(Style.RESET_ALL)
     print(Fore.YELLOW + '\nChoose from files:')
-    CWDFolderVar = get_cwd_string(folder)
-    for file in os.listdir(f'{CWDFolderVar}'):
+    cwd_folder_var = get_cwd_string(folder)
+    for file in os.listdir(f'{cwd_folder_var}'):
         if file.endswith('.txt'):
             print(Fore.WHITE + f'{file}')
     print('\n')
@@ -67,19 +67,20 @@ def showall_inparent():
             three.remove('ifs.py')
         # for subdirname in two:
         #     print(Fore.CYAN + os.path.join(one, subdirname))
-
         for file_name in three:
-            print(Fore.CYAN + os.path.join(one, file_name))  
+            print(Fore.CYAN + os.path.join(one, file_name))
         # Advanced usage:
         # editing the 'dirnames' list will stop os.walk() from recursing into there.
         if '.git' in two:
             # don't go into any .git directories.
             two.remove('.git')
-    print(Fore.WHITE+'<================================================')  
+    print(Fore.WHITE+'<================================================')
 
 def show_folders():
     '''This function will only display the subdirectories of the parent.'''
     print(Fore.WHITE+'\n<================================================')
+    print(f'{Fore.LIGHTMAGENTA_EX}**List of subdirectories**')
+    print(f'{Fore.WHITE}<=========================')
     for one, two, three in os.walk('.'):
         if '.git' in two:
             two.remove('.git')
@@ -88,10 +89,11 @@ def show_folders():
         for subdirname in two:
             print(Fore.CYAN + os.path.join(one, subdirname))
     print(Fore.WHITE+'<================================================')
+    print('\n')
 
 def show_folder_contents():
     '''This is a function to display a top down view from each subdirectory.'''
-    print(Fore.WHITE+'\n<================================================')
+    print(Fore.LIGHTWHITE_EX+'\n<================================================')
     for one, two, three in os.walk('.'):
         if '.git' in two:
             two.remove('.git')
@@ -114,19 +116,19 @@ def show_folder_contents():
         if 'ifs.py' in three:
             three.remove('ifs.py')
         if one == '.':
-            one = print(Fore.LIGHTBLUE_EX + '***Subdirectories and their files listed below***')
+            one = print(Fore.BLUE + '***Subdirectories and their files listed below***')
         else:
-            print(Fore.YELLOW + '<==============')
+            print(Fore.LIGHTMAGENTA_EX + '<==============')
             print(f'{Fore.LIGHTWHITE_EX}{one}')
-            print(Fore.YELLOW + '<================')
+            print(Fore.LIGHTMAGENTA_EX + '<================')
         for files in three:
-            print(f'{Fore.WHITE}{files}')
-    print(Fore.WHITE+'<================================================')
+            print(f'{Fore.GREEN}{files}')
+    print(Fore.LIGHTWHITE_EX+'<================================================')
 
 def get_cwd_string(folder):
     '''Get current working directory in a string.'''
     current_working_dir = os.getcwd()
-    currentfolder = f'{current_working_dir}/{folder}/'.replace('\\','/')
+    currentfolder = f'{current_working_dir}/{folder}/'.replace('\\', '/')
     # listFiles = os.listdir(currentfolder)
     return currentfolder
 
@@ -134,17 +136,17 @@ def get_cwd_string(folder):
 def file_match_list(folder, zfile):
     '''Checks to see if the file matches the input from the user. Otherwise, Exit.'''
     from app import main_function
-    CWDFolderVar = get_cwd_string(folder)
-    folderFileList = os.listdir(f'{CWDFolderVar}')[:]
-    if zfile.endswith('.txt') == True:
-        if zfile not in folderFileList:
+    cwd_folder_var = get_cwd_string(folder)
+    folder_file_list = os.listdir(f'{cwd_folder_var}')[:]
+    if zfile.endswith('.txt') is True:
+        if zfile not in folder_file_list:
             print(Fore.RED+f'{zfile} was not found.')
             main_function()
         else:
             print(Fore.GREEN+f'You selected file ({Fore.WHITE} {zfile} {Fore.GREEN}).')
     else:
         zfile = zfile + '.txt'
-        if zfile not in folderFileList:
+        if zfile not in folder_file_list:
             print(Fore.RED+f'{zfile} was not found.')
             main_function()
         else:

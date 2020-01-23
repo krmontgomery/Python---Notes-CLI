@@ -10,7 +10,7 @@ init(autoreset=False)
 def create_file(folder, file_name):
     '''Create a file.'''
     print(Style.RESET_ALL)
-    open(f'./{folder}/{file_name}.txt','w')
+    open(f'./{folder}/{file_name}.txt', 'w')
     print(Fore.GREEN + f'\n/{folder}/{Fore.WHITE}{file_name}.txt {Fore.GREEN}was created...')
 
 def read_file(folder, file_name):
@@ -94,11 +94,12 @@ def write_to_file(folder, file, text):
         wf.close()
 
 def delete_file(folder, file):
+    '''Function is used for deleting a file.'''
     from app import main_function
     '''Delete a specific file.'''
     print(Style.RESET_ALL)
     if os.path.exists(f'./{folder}/{file}.txt'):
-        print(Back.RESET,Fore.RED)
+        print(Back.RESET, Fore.RED)
         print('Are you sure you want to delete this file?')
         confirm = str(input('(yes/no): ')).lower().strip()
         if confirm == 'yes':
@@ -114,7 +115,7 @@ def delete_file(folder, file):
         print(Fore.YELLOW)
         file = str(input('Give a file_name: ')).lower().strip()
         if os.path.exists(f'./{folder}/{file}.txt'):
-            print(Back.RESET,Fore.RED)
+            print(Back.RESET, Fore.RED)
             print('Are you sure you want to delete this file?')
             confirm = str(input('(yes/no): ').lower()).strip()
             if confirm == 'yes':
@@ -139,8 +140,15 @@ def create_folder(passed_dir_name):
 
 def delete_folder(dir_name):
     '''Delete a specific folder. '''
+    from app import main_function
     directory = f'{dir_name}'
     parent = os.getcwd()
     path = os.path.join(parent, directory)
-    os.rmdir(path)
-    print(Fore.GREEN+f"\nDirectory '%s' has been removed successfully" %directory)
+    print(f'{Fore.RED}Are you sure you want to delete this folder?')
+    confirm = str(input('(yes/no): ').lower()).strip()
+    if confirm == 'yes':
+        os.rmdir(path)
+        print(Fore.GREEN+f"\nDirectory {Fore.WHITE}'%s' {Fore.GREEN}has been removed successfully" %directory)
+        main_function()
+    else:
+        main_function()
