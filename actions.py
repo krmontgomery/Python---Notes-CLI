@@ -6,7 +6,8 @@ from ifs import chck_directory, get_cwd_string
 
 init(autoreset=False)
 
-# ----------------- (App Actions) Functions -----------------
+# ----------------- (App Actions) Functions ------------------
+# ------------------------------------------------------------
 def create_file(folder, file_name):
     '''Create a file.'''
     print(Style.RESET_ALL)
